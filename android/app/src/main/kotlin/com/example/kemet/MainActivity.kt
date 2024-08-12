@@ -1,4 +1,4 @@
-package com.example.kemet
+package bimri.kemet
 
 import io.flutter.embedding.android.FlutterActivity
 
