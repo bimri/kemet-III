@@ -12,6 +12,7 @@ migrate_working_dir/
 
 # Firebase configuration file
 google-services.json
+lib/services/gemini_services.dart
 
 # IntelliJ related
 *.iml
