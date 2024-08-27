@@ -30,25 +30,31 @@ class _TemporalCulturalSimulationState
               width: double.infinity,
               fit: BoxFit.cover,
             ),
-            Slider(
-              min: 2000.0,
-              max: 2100.0,
-              divisions: 10,
-              label: _sliderValue.round().toString(),
-              value: _sliderValue,
-              onChanged: (double newValue) {
-                setState(() {
-                  _sliderValue = newValue;
-                  ref
-                      .read(temporalSimulationProvider.notifier)
-                      .generateSimulation(newValue.round());
-                });
-              },
+            Tooltip(
+              message: 'Slide to select a year between 2000 and 2100 to simulate cultural changes',
+              child: Slider(
+                min: 2000.0,
+                max: 2100.0,
+                divisions: 10,
+                label: _sliderValue.round().toString(),
+                value: _sliderValue,
+                onChanged: (double newValue) {
+                  setState(() {
+                    _sliderValue = newValue;
+                    ref
+                        .read(temporalSimulationProvider.notifier)
+                        .generateSimulation(newValue.round());
+                  });
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: MarkdownBody(
-                data: simulationText,
+              child: Tooltip(
+                message: 'This text shows the simulated cultural changes for the selected year',
+                child: MarkdownBody(
+                  data: simulationText,
+                ),
               ),
             ),
           ],
