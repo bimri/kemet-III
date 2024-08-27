@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 52, 20, 58),
       ),
       body: GridView.count(
-        crossAxisCount: 1,
+        crossAxisCount: 2,
         padding: const EdgeInsets.all(16.0),
         mainAxisSpacing: 16.0,
         crossAxisSpacing: 16.0,
