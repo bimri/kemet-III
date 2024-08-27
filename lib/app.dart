@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'splash_screen.dart';
 
 
-class CultureBridgeApp extends StatelessWidget {
-  const CultureBridgeApp({super.key});
+class KemetApp extends StatelessWidget {
+  const KemetApp({super.key});
 
   @override
   Widget build(BuildContext context) {

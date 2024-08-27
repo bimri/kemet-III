@@ -19,6 +19,6 @@ class Kemet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ProviderScope(child: CultureBridgeApp());
+    return const ProviderScope(child: KemetApp());
   }
 }
