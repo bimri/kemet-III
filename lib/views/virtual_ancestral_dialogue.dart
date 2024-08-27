@@ -20,7 +20,44 @@ class _VirtualAncestralDialogueState
     final messages = ref.watch(ancestralDialogueProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Virtual Ancestral Dialogue')),
+      appBar: AppBar(
+        title: const Text('Virtual Ancestral Dialogue'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('How to Use Virtual Ancestral Dialogue'),
+                    content: const SingleChildScrollView(
+                      child: ListBody(
+                        children: <Widget>[
+                          Text('Here are some ways to interact effectively:'),
+                          Text('• Ask for deep cultural dives into any African tribe'),
+                          Text('• Request proverbs and origin stories'),
+                          Text('• Inquire about migratory patterns of African peoples'),
+                          Text('• Ask for book recommendations on African history and culture'),
+                          Text('• Explore future projections for African peoples and cultures'),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Close'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
@@ -44,10 +81,13 @@ class _VirtualAncestralDialogueState
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: const InputDecoration(
-                      hintText: 'Type your message...',
+                  child: Tooltip(
+                    message: 'Ask about African cultures, stories, history, or future projections',
+                    child: TextField(
+                      controller: _messageController,
+                      decoration: const InputDecoration(
+                        hintText: 'Type your message...',
+                      ),
                     ),
                   ),
                 ),
