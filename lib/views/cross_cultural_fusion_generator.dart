@@ -20,12 +20,17 @@ class _CrossCulturalFusionGeneratorState
     final fusionDescription = ref.watch(culturalFusionProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Cross-Cultural Fusion Generator')),
+      appBar: AppBar(
+        title: const Text('Cross-Cultural Fusion Generator'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text('Fusion Level: ${(_fusionLevel * 100).round()}%'),
+            Text(
+              'Fusion Level: ${(_fusionLevel * 100).round()}%',
+              semanticsLabel: 'Current fusion level is ${(_fusionLevel * 100).round()} percent',
+            ),
             Slider(
               value: _fusionLevel,
               onChanged: (value) {
@@ -33,18 +38,25 @@ class _CrossCulturalFusionGeneratorState
                   _fusionLevel = value;
                 });
               },
+              semanticFormatterCallback: (double value) => '${(value * 100).round()}%',
             ),
-            ElevatedButton(
-              onPressed: () => ref
-                  .read(culturalFusionProvider.notifier)
-                  .generateFusion(_fusionLevel),
-              child: const Text('Generate Fusion'),
+            Tooltip(
+              message: 'Click to generate a fusion of cultural elements based on the selected fusion level',
+              child: ElevatedButton(
+                onPressed: () => ref
+                    .read(culturalFusionProvider.notifier)
+                    .generateFusion(_fusionLevel),
+                child: const Text('Generate Fusion'),
+              ),
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: SingleChildScrollView(
-                child: MarkdownBody(
-                  data: fusionDescription,
+              child: Semantics(
+                label: 'Generated fusion description',
+                child: SingleChildScrollView(
+                  child: MarkdownBody(
+                    data: fusionDescription,
+                  ),
                 ),
               ),
             ),
