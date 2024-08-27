@@ -28,17 +28,20 @@ class _OralTraditionContinuationState
             TextField(
               controller: _promptController,
               decoration: const InputDecoration(
-                labelText: 'Enter the beginning of a traditional story',
+                labelText: 'Enter the beginning of a traditional story(in any Local or Foreign language)',
                 border: OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => ref
-                  .read(oralTraditionProvider.notifier)
-                  .generateStory(_promptController.text),
-              child: const Text('Generate Continuation'),
+            Tooltip(
+              message: 'This button will generate a continuation of the traditional story based on your input.',
+              child: ElevatedButton(
+                onPressed: () => ref
+                    .read(oralTraditionProvider.notifier)
+                    .generateStory(_promptController.text),
+                child: const Text('Generate Continuation'),
+              ),
             ),
             const SizedBox(height: 16),
             Expanded(
