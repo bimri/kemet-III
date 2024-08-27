@@ -13,19 +13,10 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   int _currentIndex = 0;
-  final List<Widget> _splashScreens = [
-    _buildSplashContent(
-      image: 'assets/bmr.jpg',
-      text: 'Welcome',
-    ),
-    _buildSplashContent(
-      image: 'assets/kemet-splashscreen.jpg',
-      text: 'to',
-    ),
-    _buildSplashContent(
-      image: 'assets/kemet-splashscreen.jpg',
-      text: 'Kemet',
-    ),
+  final List<Map<String, String>> _splashData = [
+    {'image': 'assets/bmr.jpg', 'text': 'Welcome'},
+    {'image': 'assets/kemet-splashscreen.jpg', 'text': 'to'},
+    {'image': 'assets/kemet-splashscreen.jpg', 'text': 'Kemet'},
   ];
 
   @override
@@ -35,8 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _startAnimation() {
-    const duration =
-        Duration(milliseconds: 2666); // ~5 seconds total for 3 screens
+    const duration = Duration(milliseconds: 1500); // Reduced total time to ~4.5 seconds
     Timer.periodic(duration, (Timer timer) {
       if (_currentIndex < 2) {
         setState(() {
@@ -44,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         });
       } else {
         timer.cancel();
-        _navigateToHomePage(); // Call the navigation function here
+        _navigateToHomePage();
       }
     });
   }
@@ -70,27 +60,32 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          child: _splashScreens[_currentIndex],
+          duration: const Duration(milliseconds: 300), // Reduced animation duration
+          child: _buildSplashContent(
+            key: ValueKey<int>(_currentIndex),
+            image: _splashData[_currentIndex]['image']!,
+            text: _splashData[_currentIndex]['text']!,
+          ),
         ),
       ),
     );
   }
 
-  static Widget _buildSplashContent(
-      {required String image, required String text}) {
+  Widget _buildSplashContent({
+    required Key key,
+    required String image,
+    required String text,
+  }) {
     return Center(
+      key: key,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: Image.asset(
-              image,
-              width: 300,
-              height: 300,
-              fit: BoxFit.contain,
-            ),
+          Image.asset(
+            image,
+            width: 300,
+            height: 300,
+            fit: BoxFit.contain,
           ),
           const SizedBox(height: 24),
           Text(
