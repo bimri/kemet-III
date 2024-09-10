@@ -1,47 +1,46 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:kemet/views/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key, this.nextScreen});
-  final Widget? nextScreen;
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  int _currentIndex = 0;
-  final List<Map<String, String>> _splashData = [
-    {'image': 'assets/bmr.jpg', 'text': 'Welcome'},
-    {'image': 'assets/kemet-splashscreen.jpg', 'text': 'to'},
-    {'image': 'assets/kemet-splashscreen.jpg', 'text': 'Kemet'},
-  ];
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
-    _startAnimation();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+    _slideAnimation = Tween<double>(begin: 50.0, end: 0.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
+    );
+    _controller.forward();
+    Timer(const Duration(seconds: 3), _navigateToHomePage);
   }
 
-  void _startAnimation() {
-    const duration = Duration(milliseconds: 1500); // Reduced total time to ~4.5 seconds
-    Timer.periodic(duration, (Timer timer) {
-      if (_currentIndex < 2) {
-        setState(() {
-          _currentIndex++;
-        });
-      } else {
-        timer.cancel();
-        _navigateToHomePage();
-      }
-    });
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _navigateToHomePage() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const HomePage()),
+      MaterialPageRoute(builder: (_) => HomePage()),
     );
   }
 
@@ -51,53 +50,84 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
-              Color.fromARGB(255, 236, 233, 233),
-              Color.fromARGB(255, 230, 227, 227)
+              Colors.black,
+              Color.fromARGB(255, 52, 20, 58),
+              Colors.white,
             ],
           ),
         ),
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300), // Reduced animation duration
-          child: _buildSplashContent(
-            key: ValueKey<int>(_currentIndex),
-            image: _splashData[_currentIndex]['image']!,
-            text: _splashData[_currentIndex]['text']!,
-          ),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: CustomPaint(
+                painter: ShimmerPainter(),
+              ),
+            ),
+            Center(
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Transform.translate(
+                    offset: Offset(0, _slideAnimation.value),
+                    child: Opacity(
+                      opacity: _fadeAnimation.value,
+                      child: Text(
+                        'KEMET',
+                        style: GoogleFonts.yatraOne(
+                          fontSize: 72,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 10,
+                          shadows: [
+                            for (double i = 1; i < 4; i++)
+                              Shadow(
+                                color: const Color.fromARGB(255, 52, 20, 58)
+                                    .withOpacity(0.3),
+                                blurRadius: 3 * i,
+                                offset: Offset(i, i),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildSplashContent({
-    required Key key,
-    required String image,
-    required String text,
-  }) {
-    return Center(
-      key: key,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            image,
-            width: 300,
-            height: 300,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
+class ShimmerPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..shader = LinearGradient(
+        colors: [
+          Colors.white.withOpacity(0.0),
+          Colors.white.withOpacity(0.2),
+          Colors.white.withOpacity(0.0),
         ],
-      ),
-    );
+        stops: const [0.0, 0.5, 1.0],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
+      ..style = PaintingStyle.fill;
+
+    final path = Path()
+      ..moveTo(0, size.height * 0.5)
+      ..quadraticBezierTo(size.width * 0.25, size.height * 0.25,
+          size.width * 0.5, size.height * 0.5)
+      ..quadraticBezierTo(
+          size.width * 0.75, size.height * 0.75, size.width, size.height * 0.5);
+
+    canvas.drawPath(path, paint);
   }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
