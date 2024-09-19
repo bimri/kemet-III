@@ -1,27 +1,22 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:kemet/models/generative_model_wrapper.dart';
 
 class GeminiService {
-  late final GenerativeModel _model;
+  final GenerativeModelWrapper model;
 
-  GeminiService({String modelName = 'gemini-1.5-flash-latest'}) {
-    // Initialize the model in the constructor
-    _model = GenerativeModel(
-      model: modelName,
-      apiKey:
-          'GOOGLE_API_KEY', // Replace with your actual API key
-    );
-  }
+  GeminiService({GenerativeModelWrapper? model, required String apiKey})
+      : model = model ?? GenerativeModelImpl(GenerativeModel(
+          model: 'gemini-1.5-pro',
+          apiKey: apiKey,
+        ));
 
-  Future<String> generateContent(String prompt, String model) async {
+  Future<String> generateContent(String prompt, String modelName) async {
     try {
-      final content = [Content.text(prompt)];
-      final response = await _model.generateContent(content);
-
-      if (response.text == null) {
-        throw Exception('No text generated');
+      final response = await model.generateContent(content: [Content.text(prompt)]);
+      if (response.candidates.isEmpty || response.candidates.first.content.parts.isEmpty) {
+        throw Exception('No content generated');
       }
-
-      return response.text!;
+      return response.candidates.first.content.parts.first.toString();
     } catch (e) {
       throw Exception('Failed to generate content: $e');
     }
