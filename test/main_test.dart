@@ -1,97 +1,114 @@
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mockito/mockito.dart';
-// import 'package:mockito/annotations.dart';
-// import 'package:google_generative_ai/google_generative_ai.dart';
-// import 'package:kemet/models/message.dart';
-// import 'package:kemet/services/gemini_service.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:kemet/models/message.dart';
+import 'package:kemet/models/generative_model_wrapper.dart';
+import 'package:kemet/services/gemini_service.dart';
 
-// // Generate mocks
-// @GenerateMocks([GenerativeModelWrapper])
-// import 'main_test.mocks.dart';
+// Generate mocks
+@GenerateMocks([GenerativeModelWrapper])
+import 'main_test.mocks.dart';
 
-// void main() {
-//   group('Message Model Tests', () {
-//     test('should create a Message instance from JSON', () {
-//       final json = {'role': 'user', 'content': 'Hello, World!'};
-//       final message = Message.fromJson(json);
+// Use a placeholder for the API key
+const String _kTestApiKey = 'TEST_API_KEY';
 
-//       expect(message.role, 'user');
-//       expect(message.content, 'Hello, World!');
-//     });
+void main() {
+  group('Message Model Tests', () {
+    test('should create a Message instance from JSON', () {
+      final json = {'role': 'user', 'content': 'Hello, World!'};
+      final message = Message.fromJson(json);
 
-//     test('should convert Message instance to JSON', () {
-//       final message = Message(role: 'assistant', content: 'How can I help you?');
-//       final json = message.toJson();
+      expect(message.role, 'user');
+      expect(message.content, 'Hello, World!');
+    });
 
-//       expect(json['role'], 'assistant');
-//       expect(json['content'], 'How can I help you?');
-//     });
-//   });
+    test('should convert Message instance to JSON', () {
+      final message =
+          Message(role: 'assistant', content: 'How can I help you?');
+      final json = message.toJson();
 
-//   group('GeminiService Tests', () {
-//     late MockGenerativeModelWrapper mockWrapper;
-//     late GeminiService geminiService;
+      expect(json['role'], 'assistant');
+      expect(json['content'], 'How can I help you?');
+    });
+  });
 
-//     setUp(() {
-//       mockWrapper = MockGenerativeModelWrapper();
-//       geminiService = GeminiService.withWrapper(mockWrapper);
-//     });
+  group('GeminiService Tests', () {
+    late MockGenerativeModelWrapper mockModel;
+    late GeminiService geminiService;
 
-//     test('should generate content successfully', () async {
-//       const prompt = 'Tell me a joke';
-//       const expectedResponse = 'Why did the chicken cross the road?';
+    setUp(() {
+      mockModel = MockGenerativeModelWrapper();
+      geminiService = GeminiService(model: mockModel, apiKey: _kTestApiKey);
+    });
 
-//       when(mockWrapper.generateContent([Content.text(prompt)]))
-//           .thenAnswer((_) async => GenerateContentResponse(text: expectedResponse));
+    test('should generate content successfully', () async {
+      const prompt = 'Tell me a joke';
+      const expectedResponse = 'Why did the chicken cross the road?';
 
-//       final result = await geminiService.generateContent(prompt, 'test-model');
+      when(mockModel.generateContent(content: [Content.text(prompt)]))
+          .thenAnswer((_) async => GenerateContentResponse(
+                candidates: [
+                  Candidate(
+                      content:
+                          Content(parts: [TextPart(text: expectedResponse)]))
+                ],
+              ));
 
-//       expect(result, expectedResponse);
-//       verify(mockWrapper.generateContent([Content.text(prompt)])).called(1);
-//     });
+      final result = await geminiService.generateContent(prompt, 'test-model');
 
-//     test('should throw exception when no text is generated', () async {
-//       const prompt = 'Tell me a joke';
+      expect(result, expectedResponse);
+      verify(mockModel.generateContent(content: [Content.text(prompt)]))
+          .called(1);
+    });
 
-//       when(mockWrapper.generateContent([Content.text(prompt)]))
-//           .thenAnswer((_) async => GenerateContentResponse(text: null));
+    test('should throw exception when no text is generated', () async {
+      const prompt = 'Tell me a joke';
 
-//       expect(() => geminiService.generateContent(prompt, 'test-model'),
-//           throwsA(isA<Exception>()));
-//     });
+      when(mockModel.generateContent(content: [Content.text(prompt)]))
+          .thenAnswer((_) async => GenerateContentResponse(candidates: []));
 
-//     test('should throw exception when API call fails', () async {
-//       const prompt = 'Tell me a joke';
+      expect(() => geminiService.generateContent(prompt, 'test-model'),
+          throwsA(isA<Exception>()));
+    });
 
-//       when(mockWrapper.generateContent([Content.text(prompt)]))
-//           .thenThrow(Exception('API Error'));
+    test('should throw exception when API call fails', () async {
+      const prompt = 'Tell me a joke';
 
-//       expect(() => geminiService.generateContent(prompt, 'test-model'),
-//           throwsA(isA<Exception>()));
-//     });
-//   });
+      when(mockModel.generateContent(content: [Content.text(prompt)]))
+          .thenThrow(Exception('API Error'));
 
-//   group('GeminiService Integration Tests', () {
-//     late GeminiService geminiService;
+      expect(() => geminiService.generateContent(prompt, 'test-model'),
+          throwsA(isA<Exception>()));
+    });
+  });
 
-//     setUp(() {
-//       geminiService = GeminiService();
-//     });
+  group('GeminiService Integration Tests', () {
+    late GeminiService geminiService;
 
-//     test('should generate content with actual API', () async {
-//       const prompt = 'What is the capital of France?';
-//       final result = await geminiService.generateContent(prompt, 'gemini-1.5-flash-latest');
+    setUp(() {
+      // Use an environment variable or a secure method to get the API key
+      const apiKey = String.fromEnvironment('GEMINI_API_KEY');
+      geminiService = GeminiService(apiKey: apiKey);
+    });
 
-//       expect(result, isNotEmpty);
-//       expect(result.toLowerCase(), contains('paris'));
-//     }, skip: 'Requires API key to run');
+    test('should generate content with actual API', () async {
+      const prompt = 'What is the capital of France?';
+      final result = await geminiService.generateContent(
+          prompt, 'gemini-1.5-flash-latest');
 
-//     test('should handle long prompts', () async {
-//       final longPrompt = '${'Tell me about the history of ' * 50}artificial intelligence.';
-//       final result = await geminiService.generateContent(longPrompt, 'gemini-1.5-flash-latest');
+      expect(result, isNotEmpty);
+      expect(result.toLowerCase(), contains('paris'));
+    }, skip: 'Requires API key to run');
 
-//       expect(result, isNotEmpty);
-//       expect(result.length, greaterThan(100));
-//     }, skip: 'Requires API key to run');
-//   });
-// }
+    test('should handle long prompts', () async {
+      final longPrompt =
+          '${'Tell me about the history of ' * 50}artificial intelligence.';
+      final result = await geminiService.generateContent(
+          longPrompt, 'gemini-1.5-flash-latest');
+
+      expect(result, isNotEmpty);
+      expect(result.length, greaterThan(100));
+    }, skip: 'Requires API key to run');
+  });
+}
