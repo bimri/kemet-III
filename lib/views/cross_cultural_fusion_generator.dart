@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '../widgets/kemet_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../controllers/cultural_fusion_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import '../controllers/cultural_fusion_controller.dart';
 
 class CrossCulturalFusionGenerator extends ConsumerStatefulWidget {
   const CrossCulturalFusionGenerator({super.key});
@@ -12,24 +14,89 @@ class CrossCulturalFusionGenerator extends ConsumerStatefulWidget {
 }
 
 class _CrossCulturalFusionGeneratorState
-    extends ConsumerState<CrossCulturalFusionGenerator> {
+    extends ConsumerState<CrossCulturalFusionGenerator>
+    with SingleTickerProviderStateMixin {
   double _fusionLevel = 0.5;
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final fusionDescription = ref.watch(culturalFusionProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cross-Cultural Fusion Generator'),
+      extendBodyBehindAppBar: true,
+      appBar: const KemetAppBar(title: 'Cross-Cultural Fusion'),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/bmr.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                FadeTransition(
+                  opacity: _animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, -0.5),
+                      end: Offset.zero,
+                    ).animate(_animation),
+                    child: _buildInputSection(),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                FadeTransition(
+                  opacity: _animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 0.5),
+                      end: Offset.zero,
+                    ).animate(_animation),
+                    child: _buildOutputSection(fusionDescription),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-      body: Padding(
+    );
+  }
+
+  Widget _buildInputSection() {
+    return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'Fusion Level: ${(_fusionLevel * 100).round()}%',
-              semanticsLabel: 'Current fusion level is ${(_fusionLevel * 100).round()} percent',
+              style: GoogleFonts.raleway(fontSize: 18),
             ),
             Slider(
               value: _fusionLevel,
@@ -38,26 +105,40 @@ class _CrossCulturalFusionGeneratorState
                   _fusionLevel = value;
                 });
               },
-              semanticFormatterCallback: (double value) => '${(value * 100).round()}%',
             ),
-            Tooltip(
-              message: 'Click to generate a fusion of cultural elements based on the selected fusion level',
-              child: ElevatedButton(
-                onPressed: () => ref
-                    .read(culturalFusionProvider.notifier)
-                    .generateFusion(_fusionLevel),
-                child: const Text('Generate Fusion'),
-              ),
+            ElevatedButton(
+              onPressed: () => ref
+                  .read(culturalFusionProvider.notifier)
+                  .generateFusion(_fusionLevel),
+              child: Text('Generate Fusion', style: GoogleFonts.raleway()),
             ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: Semantics(
-                label: 'Generated fusion description',
-                child: SingleChildScrollView(
-                  child: MarkdownBody(
-                    data: fusionDescription,
-                  ),
-                ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOutputSection(String fusionDescription) {
+    return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Cultural Fusion:',
+              style: GoogleFonts.raleway(
+                  fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            MarkdownBody(
+              data: fusionDescription,
+              styleSheet: MarkdownStyleSheet(
+                p: GoogleFonts.lato(fontSize: 16),
+                h1: GoogleFonts.raleway(
+                    fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
           ],
