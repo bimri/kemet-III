@@ -23,8 +23,9 @@ dependencies:
   # flutter_cache_manager:
   google_fonts: 
   # flutter_svg:
-  flutter_staggered_grid_view:  
+  # flutter_staggered_grid_view:  
   logger: 
+  flutter_staggered_animations:   
 
 dev_dependencies:
   flutter_lints: 
