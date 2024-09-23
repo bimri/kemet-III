@@ -14,7 +14,7 @@ class VirtualAncestralDialogue extends ConsumerStatefulWidget {
 }
 
 class _VirtualAncestralDialogueState
-    extends ConsumerState<VirtualAncestralDialogue> 
+    extends ConsumerState<VirtualAncestralDialogue>
     with SingleTickerProviderStateMixin {
   final TextEditingController _messageController = TextEditingController();
   late AnimationController _animationController;
@@ -27,7 +27,8 @@ class _VirtualAncestralDialogueState
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+    _fadeAnimation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _animationController.forward();
   }
 
@@ -55,7 +56,7 @@ class _VirtualAncestralDialogueState
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/bmr.jpg'),
+            image: AssetImage('assets/ancestral.jpeg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -70,18 +71,21 @@ class _VirtualAncestralDialogueState
                     itemBuilder: (context, index) {
                       final message = messages[index];
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
                         child: Row(
-                          mainAxisAlignment: message.role == 'user' 
-                              ? MainAxisAlignment.end 
+                          mainAxisAlignment: message.role == 'user'
+                              ? MainAxisAlignment.end
                               : MainAxisAlignment.start,
                           children: [
-                            if (message.role != 'user') 
+                            if (message.role != 'user')
                               CircleAvatar(
-                                backgroundColor: Colors.deepPurple.withOpacity(0.7),
+                                backgroundColor:
+                                    Colors.deepPurple.withOpacity(0.7),
                                 child: Text(
                                   message.role[0].toUpperCase(),
-                                  style: GoogleFonts.raleway(color: Colors.white),
+                                  style:
+                                      GoogleFonts.raleway(color: Colors.white),
                                 ),
                               ),
                             const SizedBox(width: 8),
@@ -97,21 +101,24 @@ class _VirtualAncestralDialogueState
                                     data: message.content,
                                     styleSheet: MarkdownStyleSheet(
                                       p: GoogleFonts.lato(
-                                        textStyle: const TextStyle(color: Colors.black87),
+                                        textStyle: const TextStyle(
+                                            color: Colors.black87),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            if (message.role == 'user') 
+                            if (message.role == 'user')
                               const SizedBox(width: 8),
-                            if (message.role == 'user') 
+                            if (message.role == 'user')
                               CircleAvatar(
-                                backgroundColor: Colors.deepPurple.withOpacity(0.7),
+                                backgroundColor:
+                                    Colors.deepPurple.withOpacity(0.7),
                                 child: Text(
                                   message.role[0].toUpperCase(),
-                                  style: GoogleFonts.raleway(color: Colors.white),
+                                  style:
+                                      GoogleFonts.raleway(color: Colors.white),
                                 ),
                               ),
                           ],
@@ -124,7 +131,8 @@ class _VirtualAncestralDialogueState
               Container(
                 color: Colors.white.withOpacity(0.9),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -173,15 +181,20 @@ class _VirtualAncestralDialogueState
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('How to Use', style: GoogleFonts.raleway(fontWeight: FontWeight.bold)),
+          title: Text('How to Use',
+              style: GoogleFonts.raleway(fontWeight: FontWeight.bold)),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Here are some ways to interact effectively:', style: GoogleFonts.lato()),
-                Text('• Ask about any African tribe', style: GoogleFonts.lato()),
-                Text('• Request proverbs and stories', style: GoogleFonts.lato()),
+                Text('Here are some ways to interact effectively:',
+                    style: GoogleFonts.lato()),
+                Text('• Ask about any African tribe',
+                    style: GoogleFonts.lato()),
+                Text('• Request proverbs and stories',
+                    style: GoogleFonts.lato()),
                 Text('• Inquire about migrations', style: GoogleFonts.lato()),
-                Text('• Ask for book recommendations', style: GoogleFonts.lato()),
+                Text('• Ask for book recommendations',
+                    style: GoogleFonts.lato()),
                 Text('• Explore future projections', style: GoogleFonts.lato()),
               ],
             ),

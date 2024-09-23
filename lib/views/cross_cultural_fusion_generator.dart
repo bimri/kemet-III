@@ -47,7 +47,7 @@ class _CrossCulturalFusionGeneratorState
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/bmr.jpg'),
+            image: AssetImage('assets/x-cultural.jpeg'),
             fit: BoxFit.cover,
           ),
         ),

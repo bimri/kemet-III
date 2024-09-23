@@ -48,7 +48,7 @@ class _PredictiveLanguageEvolutionState
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/bmr.jpg'),
+            image: AssetImage('assets/predictive-lang.jpeg'),
             fit: BoxFit.cover,
           ),
         ),

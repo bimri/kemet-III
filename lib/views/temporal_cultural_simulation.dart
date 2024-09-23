@@ -47,7 +47,7 @@ class _TemporalCulturalSimulationState
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/bmr.jpg'),
+            image: AssetImage('assets/temporal.jpeg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -64,15 +64,6 @@ class _TemporalCulturalSimulationState
                         begin: const Offset(0, -0.5),
                         end: Offset.zero,
                       ).animate(_animation),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/kemet-splashscreen.jpg',
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
                     ),
                   ),
                   const SizedBox(height: 24),

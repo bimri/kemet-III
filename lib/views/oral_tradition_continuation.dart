@@ -47,7 +47,7 @@ class _OralTraditionContinuationState
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/bmr.jpg'),
+            image: AssetImage('assets/oral.jpeg'),
             fit: BoxFit.cover,
           ),
         ),
