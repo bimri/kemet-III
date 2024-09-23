@@ -4,6 +4,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/oral_tradition_controller.dart';
+import '../widgets/kemet_title.dart';
+import '../widgets/kemet_button_text.dart';
 
 class OralTraditionContinuation extends ConsumerStatefulWidget {
   const OralTraditionContinuation({super.key});
@@ -110,8 +112,7 @@ class _OralTraditionContinuationState
               onPressed: () => ref
                   .read(oralTraditionProvider.notifier)
                   .generateStory(_promptController.text),
-              child:
-                  Text('Generate Continuation', style: GoogleFonts.raleway()),
+              child: KemetButtonText(text: 'Generate Continuation'),
             ),
           ],
         ),
@@ -128,10 +129,10 @@ class _OralTraditionContinuationState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Generated Story:',
-              style: GoogleFonts.raleway(
-                  fontSize: 18, fontWeight: FontWeight.bold),
+            KemetTitle(
+              text: 'Generated Story:',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
             const SizedBox(height: 8),
             MarkdownBody(

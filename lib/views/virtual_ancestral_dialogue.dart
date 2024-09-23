@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/ancestral_dialogue_controller.dart';
 import '../widgets/kemet_app_bar.dart';
+import '../widgets/kemet_title.dart';
+import '../widgets/kemet_body_text.dart';
 
 class VirtualAncestralDialogue extends ConsumerStatefulWidget {
   const VirtualAncestralDialogue({super.key});
@@ -82,10 +84,10 @@ class _VirtualAncestralDialogueState
                               CircleAvatar(
                                 backgroundColor:
                                     Colors.deepPurple.withOpacity(0.7),
-                                child: Text(
-                                  message.role[0].toUpperCase(),
-                                  style:
-                                      GoogleFonts.raleway(color: Colors.white),
+                                child: KemetTitle(
+                                  text: message.role[0].toUpperCase(),
+                                  fontSize: 16,
+                                  color: Colors.white,
                                 ),
                               ),
                             const SizedBox(width: 8),
@@ -115,10 +117,10 @@ class _VirtualAncestralDialogueState
                               CircleAvatar(
                                 backgroundColor:
                                     Colors.deepPurple.withOpacity(0.7),
-                                child: Text(
-                                  message.role[0].toUpperCase(),
-                                  style:
-                                      GoogleFonts.raleway(color: Colors.white),
+                                child: KemetTitle(
+                                  text: message.role[0].toUpperCase(),
+                                  fontSize: 16,
+                                  color: Colors.white,
                                 ),
                               ),
                           ],
@@ -181,27 +183,25 @@ class _VirtualAncestralDialogueState
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('How to Use',
-              style: GoogleFonts.raleway(fontWeight: FontWeight.bold)),
-          content: SingleChildScrollView(
+          title: const KemetTitle(
+            text: 'How to Use',
+            fontWeight: FontWeight.bold,
+          ),
+          content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Here are some ways to interact effectively:',
-                    style: GoogleFonts.lato()),
-                Text('• Ask about any African tribe',
-                    style: GoogleFonts.lato()),
-                Text('• Request proverbs and stories',
-                    style: GoogleFonts.lato()),
-                Text('• Inquire about migrations', style: GoogleFonts.lato()),
-                Text('• Ask for book recommendations',
-                    style: GoogleFonts.lato()),
-                Text('• Explore future projections', style: GoogleFonts.lato()),
+                KemetBodyText(text: 'Here are some ways to interact effectively:'),
+                KemetBodyText(text: '• Ask about any African tribe'),
+                KemetBodyText(text: '• Request proverbs and stories'),
+                KemetBodyText(text: '• Inquire about migrations'),
+                KemetBodyText(text: '• Ask for book recommendations'),
+                KemetBodyText(text: '• Explore future projections'),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Close', style: GoogleFonts.raleway()),
+              child: const KemetBodyText(text: 'Close'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

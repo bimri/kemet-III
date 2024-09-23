@@ -8,6 +8,9 @@ import 'oral_tradition_continuation.dart';
 import 'cross_cultural_fusion_generator.dart';
 import 'virtual_ancestral_dialogue.dart';
 import 'predictive_language_evolution.dart';
+import '../widgets/kemet_title.dart';
+import '../widgets/kemet_body_text.dart';
+import '../widgets/kemet_button_text.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -96,16 +99,10 @@ class HomePage extends StatelessWidget {
                   flex: 2,
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.raleway(
-                        textStyle: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
+                    child: KemetTitle(
+                      text: title,
+                      fontSize: 18.0,
+                      color: Colors.white,
                     ),
                   ),
                 ),

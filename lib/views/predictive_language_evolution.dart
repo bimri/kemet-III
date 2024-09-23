@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/language_evolution_controller.dart';
 import '../widgets/kemet_app_bar.dart';
+import '../widgets/kemet_title.dart';
+import '../widgets/kemet_body_text.dart';
+import '../widgets/kemet_button_text.dart';
 
 class PredictiveLanguageEvolution extends ConsumerStatefulWidget {
   const PredictiveLanguageEvolution({super.key});
@@ -107,9 +110,9 @@ class _PredictiveLanguageEvolutionState
               ),
             ),
             const SizedBox(height: 16),
-            Text(
-              'Years into the future: $_yearsFuture',
-              style: GoogleFonts.raleway(fontSize: 16),
+            KemetBodyText(
+              text: 'Years into the future: $_yearsFuture',
+              fontSize: 16,
             ),
             Slider(
               min: 10,
@@ -129,7 +132,7 @@ class _PredictiveLanguageEvolutionState
                     .read(languageEvolutionProvider.notifier)
                     .evolveLanguage(_wordController.text, _yearsFuture);
               },
-              child: Text('Evolve Language', style: GoogleFonts.raleway()),
+              child: KemetButtonText(text: 'Evolve Language'),
             ),
           ],
         ),
@@ -146,10 +149,10 @@ class _PredictiveLanguageEvolutionState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Evolved language:',
-              style: GoogleFonts.raleway(
-                  fontSize: 18, fontWeight: FontWeight.bold),
+            KemetTitle(
+              text: 'Evolved language:',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
             const SizedBox(height: 8),
             MarkdownBody(

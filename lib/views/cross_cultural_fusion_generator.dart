@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../controllers/cultural_fusion_controller.dart';
+import '../widgets/kemet_title.dart';
+import '../widgets/kemet_body_text.dart';
+import '../widgets/kemet_button_text.dart';
 
 class CrossCulturalFusionGenerator extends ConsumerStatefulWidget {
   const CrossCulturalFusionGenerator({super.key});
@@ -94,9 +97,9 @@ class _CrossCulturalFusionGeneratorState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Fusion Level: ${(_fusionLevel * 100).round()}%',
-              style: GoogleFonts.raleway(fontSize: 18),
+            KemetBodyText(
+              text: 'Fusion Level: ${(_fusionLevel * 100).round()}%',
+              fontSize: 18,
             ),
             Slider(
               value: _fusionLevel,
@@ -110,7 +113,7 @@ class _CrossCulturalFusionGeneratorState
               onPressed: () => ref
                   .read(culturalFusionProvider.notifier)
                   .generateFusion(_fusionLevel),
-              child: Text('Generate Fusion', style: GoogleFonts.raleway()),
+              child: KemetButtonText(text: 'Generate Fusion'),
             ),
           ],
         ),
@@ -127,10 +130,10 @@ class _CrossCulturalFusionGeneratorState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Cultural Fusion:',
-              style: GoogleFonts.raleway(
-                  fontSize: 18, fontWeight: FontWeight.bold),
+            KemetTitle(
+              text: 'Cultural Fusion:',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
             const SizedBox(height: 8),
             MarkdownBody(

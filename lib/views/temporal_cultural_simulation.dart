@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../controllers/temporal_simulation_controller.dart';
+import '../widgets/kemet_title.dart';
 
 class TemporalCulturalSimulation extends ConsumerStatefulWidget {
   const TemporalCulturalSimulation({super.key});
@@ -76,15 +77,10 @@ class _TemporalCulturalSimulationState
                       ).animate(_animation),
                       child: Column(
                         children: [
-                          Text(
-                            'Year: ${_sliderValue.round()}',
-                            style: GoogleFonts.raleway(
-                              textStyle: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
+                          KemetTitle(
+                            text: 'Year: ${_sliderValue.round()}',
+                            fontSize: 24,
+                            color: Colors.white,
                           ),
                           Slider(
                             min: 2000.0,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:kemet/views/home_page.dart';
+import 'widgets/kemet_logo_text.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -74,24 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
                     offset: Offset(0, _slideAnimation.value),
                     child: Opacity(
                       opacity: _fadeAnimation.value,
-                      child: Text(
-                        'KEMET',
-                        style: GoogleFonts.yatraOne(
-                          fontSize: 72,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 10,
-                          shadows: [
-                            for (double i = 1; i < 4; i++)
-                              Shadow(
-                                color: const Color.fromARGB(255, 52, 20, 58)
-                                    .withOpacity(0.3),
-                                blurRadius: 3 * i,
-                                offset: Offset(i, i),
-                              ),
-                          ],
-                        ),
-                      ),
+                      child: const KemetLogoText(text: 'KEMET'),
                     ),
                   );
                 },
