@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kemet/widgets/kemet_title.dart';
 
-
 class KemetAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
@@ -15,12 +14,14 @@ class KemetAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: const Color.fromARGB(255, 52, 20, 58),
       elevation: 0,
       title: KemetTitle(
         text: title,
         fontSize: 20,
-        color: Colors.black,
+        color: Colors.white,
+        maxLines: 2,
+        textAlign: TextAlign.center,
       ),
       actions: actions,
     );
