@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/kemet_app_bar.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kemet/utils/custom_page_route.dart';
 import 'temporal_cultural_simulation.dart';
 import 'oral_tradition_continuation.dart';
@@ -9,8 +8,6 @@ import 'cross_cultural_fusion_generator.dart';
 import 'virtual_ancestral_dialogue.dart';
 import 'predictive_language_evolution.dart';
 import '../widgets/kemet_title.dart';
-import '../widgets/kemet_body_text.dart';
-import '../widgets/kemet_button_text.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});

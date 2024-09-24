@@ -113,7 +113,7 @@ class _CrossCulturalFusionGeneratorState
               onPressed: () => ref
                   .read(culturalFusionProvider.notifier)
                   .generateFusion(_fusionLevel),
-              child: KemetButtonText(text: 'Generate Fusion'),
+              child: const KemetButtonText(text: 'Generate Fusion'),
             ),
           ],
         ),
@@ -130,7 +130,7 @@ class _CrossCulturalFusionGeneratorState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            KemetTitle(
+            const KemetTitle(
               text: 'Cultural Fusion:',
               fontSize: 18,
               fontWeight: FontWeight.bold,

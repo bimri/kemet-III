@@ -112,7 +112,7 @@ class _OralTraditionContinuationState
               onPressed: () => ref
                   .read(oralTraditionProvider.notifier)
                   .generateStory(_promptController.text),
-              child: KemetButtonText(text: 'Generate Continuation'),
+              child: const KemetButtonText(text: 'Generate Continuation'),
             ),
           ],
         ),
@@ -129,7 +129,7 @@ class _OralTraditionContinuationState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            KemetTitle(
+            const KemetTitle(
               text: 'Generated Story:',
               fontSize: 18,
               fontWeight: FontWeight.bold,

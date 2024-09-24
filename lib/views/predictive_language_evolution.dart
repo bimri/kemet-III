@@ -132,7 +132,7 @@ class _PredictiveLanguageEvolutionState
                     .read(languageEvolutionProvider.notifier)
                     .evolveLanguage(_wordController.text, _yearsFuture);
               },
-              child: KemetButtonText(text: 'Evolve Language'),
+              child: const KemetButtonText(text: 'Evolve Language'),
             ),
           ],
         ),
@@ -149,7 +149,7 @@ class _PredictiveLanguageEvolutionState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            KemetTitle(
+            const KemetTitle(
               text: 'Evolved language:',
               fontSize: 18,
               fontWeight: FontWeight.bold,
