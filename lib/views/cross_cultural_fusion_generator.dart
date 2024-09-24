@@ -134,6 +134,8 @@ class _CrossCulturalFusionGeneratorState
               text: 'Cultural Fusion:',
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             MarkdownBody(

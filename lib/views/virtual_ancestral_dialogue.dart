@@ -88,6 +88,8 @@ class _VirtualAncestralDialogueState
                                   text: message.role[0].toUpperCase(),
                                   fontSize: 16,
                                   color: Colors.white,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
                             const SizedBox(width: 8),
@@ -121,6 +123,8 @@ class _VirtualAncestralDialogueState
                                   text: message.role[0].toUpperCase(),
                                   fontSize: 16,
                                   color: Colors.white,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
                           ],
@@ -186,6 +190,9 @@ class _VirtualAncestralDialogueState
           title: const KemetTitle(
             text: 'How to Use',
             fontWeight: FontWeight.bold,
+            fontSize: 18,
+            maxLines: 2,
+            textAlign: TextAlign.center,
           ),
           content: const SingleChildScrollView(
             child: ListBody(

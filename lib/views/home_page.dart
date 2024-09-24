@@ -87,19 +87,20 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Flexible(
+                Expanded(
                   flex: 3,
                   child: Icon(icon, size: 48.0, color: Colors.white),
                 ),
                 const SizedBox(height: 8.0),
-                Flexible(
+                Expanded(
                   flex: 2,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
+                  child: Center(
                     child: KemetTitle(
                       text: title,
-                      fontSize: 18.0,
+                      fontSize: 16.0,
                       color: Colors.white,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),

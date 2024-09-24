@@ -133,6 +133,8 @@ class _OralTraditionContinuationState
               text: 'Generated Story:',
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             MarkdownBody(

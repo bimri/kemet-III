@@ -153,6 +153,8 @@ class _PredictiveLanguageEvolutionState
               text: 'Evolved language:',
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             MarkdownBody(

@@ -12,7 +12,7 @@ class KemetTitle extends StatelessWidget {
     required this.text,
     this.fontSize = 24,
     this.fontWeight = FontWeight.bold,
-    this.color = Colors.black,
+    this.color = Colors.black, required int maxLines, required TextAlign textAlign,
   });
 
   @override

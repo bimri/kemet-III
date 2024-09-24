@@ -81,6 +81,8 @@ class _TemporalCulturalSimulationState
                             text: 'Year: ${_sliderValue.round()}',
                             fontSize: 24,
                             color: Colors.white,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
                           ),
                           Slider(
                             min: 2000.0,
